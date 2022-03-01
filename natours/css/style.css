@@ -68,11 +68,13 @@ have to use rgb for opacity
     top: 40%; /* of parent element as cut out makes it look further down*/ 
     left: 50%;
     transform: translate(-50%, -50%); /*on x y 50% of element (not parent) ie box size so in actual center*/    
+    text-align: center;
 }
 .heading-primary {
     color: #fff;
     text-transform: uppercase;
     backface-visibility: hidden; /* prevent it from jumping up which animations do  */
+    margin-bottom: 6rem; 
 }
 .heading-primary-main {
     display: block;
@@ -93,11 +95,11 @@ have to use rgb for opacity
 @keyframes moveInLeft {
     0% { /*start y top to bottom  x left to right*/
         opacity: 0;
-        transform: translateX(-1rem) rotate(-50deg);
+        transform: translateX(-10rem); /* rotate(-50deg); */
     }
-    60% {
+    /* 60% {
         transform: rotate(120deg);
-    }
+    } */
     80% { /* bounce in opp direction */
         transform: translateX(1rem);
     }
@@ -108,6 +110,7 @@ have to use rgb for opacity
     }
 
 }
+/* animation for subheader */
 @keyframes moveInRight{
     0% {
         opacity: 0;
@@ -120,4 +123,78 @@ have to use rgb for opacity
         opacity: 1;
         transform: translate(0);
     }
+}
+.btn, .btn:link, .btn:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1.5rem 4rem;
+    display: inline-block; /* if want padding or height so box model else overlaps h1 above with padding  */
+    border-radius: 10rem; /* rounds corners */
+    transition: all .2s; /* has to be on initial state then on hover add */
+    position: relative; /* need this so hidden after btn can be absolute*/
+}  
+/* 2 types of animations 
+1. transition property (simple) 
+2. complex to use steps with keyframes@ rule */
+@keyframes moveInBottom{
+    /* move button in from bottom so Y*/
+    0% {
+        opacity: 0;
+        transform: translateY(30rem); 
+        /*top to bottom so positive is down */
+    }
+    
+    100% {/* end */
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+.btn:hover{
+    /* moveup ; */
+    transform: translateY(-.3rem); /*up is neg on y axis */
+    box-shadow: 0 1rem 2rem rgb(0,0,0, .2);
+    /* x y blur(looks farther away) rgb(black with 20% opacity 
+    not in x direction so 0 
+    */
+}
+btn:active { /*click is active */
+    transform: translateY(-.1rem); /*goes down on click */
+    /* when click on button want it to look smaller impression that it is closer
+    so decrease shadow and blur */
+    box-shadow: 0 .5rem 1rem rgb(0,0,0, .2);
+}
+.btn-white {
+    background-color: #fff;
+    color: #777;    
+}
+.btn::after {
+    /* white part that zooms out to infinity when we hover
+    so add hidden virtual pseudo-element  looks like btn there
+    when hover out goes back behind element*/
+    content: ""; /*have to have */
+    display: inline-block; /*have to have */
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    position:absolute; /*has to have reference of button which set to relative */
+    top:0;
+    left:0;
+    z-index: -1; /* so behind button*/ 
+    /*initial state animation*/
+    transition: all .4s;
+}
+.btn-white::after {
+    background-color: #fff;
+}
+.btn:hover::after {
+    /* show here */
+    transform: scaleX(1.4) scaleY(1.6);/*scale(1.5); */
+    opacity: 0; /* fades out */
+}
+.btn-animated{
+    /* anim name duration timing-function  delay*/
+    animation: moveInBottom .5s ease-out .75s;
+    animation-fill-mode: backwards; /* auto apply styles up to 0% before animation starts 
+    so opacity 0 as per 0% */
 }
