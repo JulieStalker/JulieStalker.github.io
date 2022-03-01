@@ -1,0 +1,123 @@
+/*
+COLORS:
+
+Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+
+universal reset - no margins or heading
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /*so boders and paddings are no longer added */
+}
+html {
+    font-size: 10px;
+}
+/* basic reset will be inherited   1.7 times bigger
+all child elements of body will inherit
+*/
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.7;
+    color: #777; /* whatever width of always try to fit element inside of box */
+    padding: 3rem; /* white border around entire web page */
+}
+
+/* 95% of viewport  cover is width of viewport will try fit element within box
+top dont crop out when resize
+have to use rgb for opacity
+*/
+.header {
+    height: 95vh; 
+    background-image: linear-gradient(to right bottom, 
+        rgba(126, 213, 111, 0.8), /* opacity .8 can use colorpicker to see it*/
+        rgba(40, 180, 133, 0.8)), 
+        url(../img/hero.jpg);
+    background-size: cover;
+    background-position: top; /* always stay at top of the crops bottom */
+    position: relative;
+    clip-path: polygon(	0 0, 100% 0, 100% 75vh, 0 100%);  /* vh viewport height */
+    /*4 corners x y, x y , define polygon
+    left to right is X    up down y
+    clockwise from top left 
+    0 0 no change top left  corner, 100% across top left right  0 no change
+    3rd coor is bottom right corner  - 100% in x  but  y change
+     of what want to show clockwiswe from top-left
+     arrow https://bennettfeely.com/clippy/        can use px */
+    /* clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%);  */
+}
+.logo-box {
+    position: absolute;
+    top: 4rem; /* have to set parent, ie header to relative*/
+    left: 4rem;
+}
+.logo {
+    height: 3.5rem;
+    /* backface-visibility: hidden;  */
+}
+.logo:hover {
+    height: 3.5rem;
+    /* animation: moveInRight 1s ease-out; */
+}
+.text-box {
+    position: absolute;
+    top: 40%; /* of parent element as cut out makes it look further down*/ 
+    left: 50%;
+    transform: translate(-50%, -50%); /*on x y 50% of element (not parent) ie box size so in actual center*/    
+}
+.heading-primary {
+    color: #fff;
+    text-transform: uppercase;
+    backface-visibility: hidden; /* prevent it from jumping up which animations do  */
+}
+.heading-primary-main {
+    display: block;
+    font-size: 6rem;
+    font-weight: 400;
+    letter-spacing: 3.5rem;
+    animation-name: moveInLeft;
+    animation-duration: 5s;
+}
+.heading-primary-sub {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1.75rem;
+    animation: moveInRight 1s ease-out;
+}
+/* Code animation */
+@keyframes moveInLeft {
+    0% { /*start y top to bottom  x left to right*/
+        opacity: 0;
+        transform: translateX(-1rem) rotate(-50deg);
+    }
+    60% {
+        transform: rotate(120deg);
+    }
+    80% { /* bounce in opp direction */
+        transform: translateX(1rem);
+    }
+    /* end */
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+
+}
+@keyframes moveInRight{
+    0% {
+        opacity: 0;
+        transform: translateX(10rem);
+    }
+    80% {
+        transform: translateX(-1rem);
+    }
+    100% {/* end */
+        opacity: 1;
+        transform: translate(0);
+    }
+}
